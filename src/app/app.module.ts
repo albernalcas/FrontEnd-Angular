@@ -12,6 +12,9 @@ import { ClienteService } from './clientes/cliente.service';
 import { RouterModule, Routes } from '@angular/router';
 //importo la clase para conectarnos con el servidor
 import { HttpClientModule } from '@angular/common/http';
+import { FormComponent } from './clientes/form.component';
+
+import { FormsModule } from '@angular/forms';
 
 //Creo array con las rutas
 const routes: Routes = [
@@ -28,14 +31,16 @@ const routes: Routes = [
     HeaderComponent,
     FooterComponent,
     DirectivaComponent,
-    ClientesComponent
+    ClientesComponent,
+    FormComponent
   ],
   imports: [
     BrowserModule,
     //importo la clase para conectarme al servidor
     HttpClientModule,
     //Registro las rutas URL del Array routes
-    RouterModule.forRoot(routes)
+    RouterModule.forRoot(routes),
+    FormsModule
   ],
   //Aqui llamo el servicio ClienteService
   providers: [ClienteService],
