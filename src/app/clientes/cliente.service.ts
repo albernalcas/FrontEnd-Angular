@@ -34,5 +34,9 @@ export class ClienteService {
     return this.http.post<Cliente>(this.urlEndPoint, cliente, {headers:this.httpHeaders})
   }
 
+  getCliente(id):Observable<Cliente>{
+    return this.http.get<Cliente>(`${this.urlEndPoint}/${id}`)
+  }
+
 
 }
