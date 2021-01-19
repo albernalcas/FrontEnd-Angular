@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 //Importo la clase cliente sin extensión para el atributo clientes
 import { Cliente } from './cliente';
 import { ClienteService } from './cliente.service';
+import swal from 'sweetalert2';
 
 @Component({
   selector: 'app-clientes',
@@ -26,5 +27,43 @@ export class ClientesComponent implements OnInit {
        clientes => this.clientes = clientes
      );
   }
+
+  deleteCliente(cliente:Cliente):void{
+
+      const swalWithBootstrapButtons = swal.mixin({
+        customClass: {
+        confirmButton: 'btn btn-success',
+        cancelButton: 'btn btn-danger'
+        },
+        buttonsStyling: false
+      })
+
+      swalWithBootstrapButtons.fire({
+        title: '¿Está Seguro?',
+        text: `¿Seguro desea eliminar el cliente ${cliente.nombre} ${cliente.apellido}?`,
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Si, eliminar',
+        cancelButtonText: 'No, cancelar!',
+        reverseButtons: true
+      }).then((result) => {
+        if (result.isConfirmed) {
+
+          this.clienteService.deleteCliente(cliente.id).subscribe(
+            response => {
+
+              this.clientes = this.clientes.filter(cli => cli !== cliente) 
+              swalWithBootstrapButtons.fire(
+                'Cliente elminado!',
+                ` Se elimino el cliente ${cliente.nombre} ${cliente.apellido}`,
+                'success'
+              )
+            }
+          )
+
+
+        }
+      })
+    }
 
 }
