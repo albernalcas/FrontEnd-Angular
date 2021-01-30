@@ -3,3 +3,12 @@
   background: #212529;
   color: white;
 }
+
+.backColor{
+  background: #F5F5F5;
+  color: black;
+}
+.alert-danger{
+  padding: 0.5rem 0em;
+  text-align: center;
+}

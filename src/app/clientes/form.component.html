@@ -1,35 +1,59 @@
 <div class="card bg-dark text-white">
-  <div class="card-header">{{ titulo }}</div>
+  <div class="card-header text-center backColor"><h4>{{ titulo }}</h4></div>
   <div class="card-body">
 
-    <form>
+    <form #validoForm="ngForm">
       <!--NOMBRES-->
       <div class="form-group row">
         <label for="nombre" class="col-form-label col-sm-2">Nombres</label>
         <div class="col-sm-6">
-          <input type="text" class="form-control" [(ngModel)]="cliente.nombre" name="nombre">
+          <input type="text" class="form-control" [(ngModel)]="cliente.nombre" name="nombre" required minlength="4" #nombre="ngModel">
+          <div class="alert alert-danger" *ngIf="nombre.invalid && (nombre.drity || nombre.touched)">
+              <div *ngIf="nombre.errors.required">
+                  El nombre es requerido
+              </div>
+              <div *ngIf="nombre.errors.minlength">
+                  El nombre debe tener minimo 4 caracteres
+              </div>
+          </div>
         </div>
       </div>
       <!--APELLIDOS-->
       <div class="form-group row">
         <label for="apellido" class="col-form-label col-sm-2">Apellidos</label>
         <div class="col-sm-6">
-          <input type="text" class="form-control" [(ngModel)]="cliente.apellido" name="apellido">
+          <input type="text" class="form-control" [(ngModel)]="cliente.apellido" name="apellido" required  minlength="4" #apellido="ngModel">
+          <div class="alert alert-danger" *ngIf="apellido.invalid && (apellido.drity || apellido.touched)">
+              <div *ngIf="apellido.errors.required">
+                  El apellido es requerido
+              </div>
+              <div *ngIf="apellido.errors.minlength">
+                  El apellido debe tener minimo 4 caracteres
+              </div>
+          </div>
         </div>
       </div>
       <!--MAIL-->
       <div class="form-group row">
         <label for="mail" class="col-form-label col-sm-2">Mail</label>
         <div class="col-sm-6">
-          <input type="text" class="form-control" [(ngModel)]="cliente.mail" name="mail">
+          <input type="text" class="form-control" [(ngModel)]="cliente.mail" name="mail" required email #mail="ngModel">
+          <div class="alert alert-danger" *ngIf="mail.invalid && (mail.drity || mail.touched)">
+              <div *ngIf="mail.errors.required">
+                  El mail es requerido
+              </div>
+              <div *ngIf="mail.errors.email">
+                  El mail no es valido
+              </div>
+          </div>
         </div>
       </div>
       <!--BOTÓN-->
       <div class="form-group row">
         <div class="col-sm-6">
-            <button class="btn btn-light" role="button" (click)='create()' *ngIf="!cliente.id else elseBlock">Crear</button>
+            <button class="btn btn-light" role="button" (click)='create()' *ngIf="!cliente.id else elseBlock" [disabled]="!validoForm.form.valid">Crear</button>
             <ng-template #elseBlock>
-              <button class="btn btn-light" role="button" (click)='updateCliente()'>Actualizar</button>
+              <button class="btn btn-light" role="button" (click)='updateCliente()' [disabled]="!validoForm.form.valid">Actualizar</button>
             </ng-template>
         </div>
       </div>
